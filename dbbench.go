@@ -31,6 +31,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
 	_ "github.com/vertica/vertica-sql-go"
+	//_ "github.com/ClickHouse/clickhouse-go/v2" // native
+	_ "github.com/mailru/go-clickhouse/v2" // http
 )
 
 func cancelOnInterrupt(cancel context.CancelFunc) {

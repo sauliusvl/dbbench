@@ -127,11 +127,11 @@ func (s *sqlDb) countQueryRows(w *SafeCSVWriter, q string, args []interface{}) (
 }
 
 func (s *sqlDb) countExecRows(q string, args []interface{}) (int64, error) {
-	res, err := s.db.Exec(q, args...)
+	_, err := s.db.Exec(q, args...)
 	if err != nil {
 		return 0, err
 	}
-	return res.RowsAffected()
+	return 0, nil; //res.RowsAffected()
 }
 
 func (s *sqlDb) Close() {
@@ -253,6 +253,24 @@ func verticaDataSourceName(cc *ConnectionConfig) string {
 		firstInt(cc.Port, 5433),
 		firstString(cc.Database, ""),
 		firstString(cc.Params, ""))
+}
+
+func clickHouseHttpDataSourceName(cc *ConnectionConfig) string {
+	return fmt.Sprintf("http://%s:%s@%s:%d/%s?local_filesystem_read_method=io_uring",
+		firstString(cc.Username, ""),
+		firstString(cc.Password, ""),
+		firstString(cc.Host, "localhost"),
+		firstInt(cc.Port, 8123),
+		firstString(cc.Database, ""))
+}
+
+func clickHouseNativeDataSourceName(cc *ConnectionConfig) string {
+	return fmt.Sprintf("tcp://%s:%d?username=%s&password=%s&database=%s",
+		firstString(cc.Host, "localhost"),
+		firstInt(cc.Port, 9000),
+		firstString(cc.Username, "default"),
+		firstString(cc.Password, ""),
+		firstString(cc.Database, ""))
 }
 
 func mySQLErrorCodeParser(e error) (string, error) {

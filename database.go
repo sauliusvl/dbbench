@@ -130,8 +130,9 @@ type Database interface {
 
 // TODO: implement error parsing for mssql and vertica
 var supportedDatabaseFlavors = map[string]DatabaseFlavor{
-	"mysql":    &sqlDatabaseFlavor{"mysql", mySQLDataSourceName, checkSQLQuery, mySQLErrorCodeParser},
-	"mssql":    &sqlDatabaseFlavor{"mssql", sqlServerDataSourceName, checkSQLQuery, unimplementedErrorCodeParser},
-	"postgres": &sqlDatabaseFlavor{"postgres", postgresDataSourceName, checkSQLQuery, postgresErrorCodeParser},
-	"vertica":  &sqlDatabaseFlavor{"vertica", verticaDataSourceName, checkSQLQuery, unimplementedErrorCodeParser},
+	"mysql":      &sqlDatabaseFlavor{"mysql", mySQLDataSourceName, checkSQLQuery, mySQLErrorCodeParser},
+	"mssql":      &sqlDatabaseFlavor{"mssql", sqlServerDataSourceName, checkSQLQuery, unimplementedErrorCodeParser},
+	"postgres":   &sqlDatabaseFlavor{"postgres", postgresDataSourceName, checkSQLQuery, postgresErrorCodeParser},
+	"clickhouse": &sqlDatabaseFlavor{"chhttp", clickHouseHttpDataSourceName, checkSQLQuery, unimplementedErrorCodeParser},
+	"vertica":    &sqlDatabaseFlavor{"vertica", verticaDataSourceName, checkSQLQuery, unimplementedErrorCodeParser},
 }
